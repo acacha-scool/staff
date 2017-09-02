@@ -1,4 +1,7 @@
-<!--- Provide a general summary of your changes in the Title above -->
+<!--- This is a template to help you creating PRs for this project. Please READ this but also feel free to 
+remove this template or use you own but plese follow CODE OF CONDUCT. -->
+
+<!--  Provide a general summary of your changes in the Title above -->
 
 ## Description
 

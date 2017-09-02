@@ -25,12 +25,12 @@
     },
     "autoload": {
         "psr-4": {
-            "acacha-scool\\staff\\": "src"
+            "Acacha\\Scool\\Staff\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "acacha-scool\\staff\\": "tests"
+            "Acacha\\Scool\\Staff\\": "tests"
         }
     },
     "scripts": {
@@ -41,6 +41,14 @@
     "extra": {
         "branch-alias": {
             "dev-master": "1.0-dev"
+        },
+        "laravel": {
+            "providers": [
+                "Acacha\\Scool\\Providers\\ScoolStaffProvider"
+            ],
+            "aliases": {
+                "ScoolStaff": "Acacha\\Scool\\ScoolStaff"
+            }
         }
     },
     "config": {
