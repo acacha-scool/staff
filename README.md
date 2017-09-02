@@ -11,13 +11,40 @@ Employees/workforce management for scools.
 
 ## Notes
 
-Types of employees:
+Apartats:
+- Dashboard: Apartat principal per rol admin i gestors/equip directiu. Dades stuff i wizard gestor model 1. Activity feed staff
+  - Que mostrar al dashboard:
+    - Nombre total professors
+    - Subtotals per cos, especialitat, etc
+    - Dades històriques altres anys
+    - Taula de substitucions actives, amb opció mostrar totes les de l'any. Link a gestió substitucions o a step wizard adequat per cada cas
+    - NOmbre de càrrecs llista de càrrecs
+    - Alertes: mostrar incoherències, temes pendets, profes a mig assignar, faltes de dades
+- Teachers:
+  - Wizards (es mostraran més o menys )
+    - Tots els wizards (vegeu més abaix)
+- Altres empleats:
+    - Assignació de rols conserges i secretaries a certs usuaris
+    - TODO: taules específiques, cal info extra? PREGUNTAR PER FITXES DE SECRE/CONSERGE?? crec no cal
+    - Afegir personal manteniment? Almenys becaris ok per surtin a certes llistes i tenir en compte. NO assignarà cap privilegi extra
+- Informes:
+  - Llista de professors i treballadors en diferents formats (PDF, web, sheet)
+- Manteniments: 
+  - Gestió de rols: ja estaran fets per defecte amb seeds però cal mostrar-los i permetre edicions valors secundaris (no esborrables els crítics com teacher o cap departament!)
+  - Permetre crear rols/càrrecs secundaris? ok i assignar a usuaris. No pot ser problema pq no faran res especial fins no s'utilitzin a codi però ja tindrem relació!
+  - CRUDS de tots els models
+  - Gestió de camps oberts: permetre afegir camps lliures a la info específica de professors sense programar.
+  
+Rutes:
+- CRUDDY BY DESIGN: https://www.youtube.com/watch?v=MF0jFKvS4SI
+
+Types of employees/staff:
 - Teachers
 - Conserges
 - Secretarias
 
 Security/Authorization/Roles
-- Users are responsible of that not this package. So we use permissions and authorizations -> Do not reinvent the wheel
+- Users are responsible of security!! Not this package. So we use permissions and authorizations -> Do not reinvent the wheel
 
 How a user become a teacher:
 - First as said we have to have a user-> we can create a new one or assign and existing one
@@ -38,6 +65,15 @@ Més dades de professorat:
 - Especialitat: tant el cos com la especialitat estarn donats d'alta a taules curriculum. Es pot assignar a un user via taula pivotant. Curriculum!
 - Funcionari, no funcionari, en practiques: estats  
 
+Migracions
+- Taules especificades a relacions + dependencies (curriculum i lesson)
+
+Seeds:
+- Alta de roles:
+  - Teacher
+  - DepartmentHead
+  - Tutor
+
 
 Relació amb currículum:
 - Taules de currículum no tinguin teacher_id ni user_id. En tot cas taules pivotants
@@ -49,10 +85,9 @@ Relació amb currículum:
   - GEstió de l'staff i càrrecs depèn d'altres mòduls
   - Exemples:
     - Teacher: depen del mòdul Lessons(timetables). Relació del rol teacher amb taula lesson, un professor és un usuari que fa almenys una llicó
-      - Com aconseguim els professors: rol teachers
+      - Com aconseguim els professors: rol teachers, info extra taula teachers (state, codi profe, etc)
       - Com aconseguim el professor d'un grup de classe: això és el tutor
-      - I els professors: mirant ufs imparteixen al grup
-      - Llicòns tenen relació amb uf i tenen teacher id
+      - I els professors: mirant ufs imparteixen al grup, la uf té lesson_user els usuaris són el profes      
     - Cap de departament: un càrrec (descripcions, etc, info extra), un rol i també relació amb taula departament
     - Tutor: un càrrec (descripcions, etc, info extra), un rol i també relació amb taula grup de classe
     - Relació polimorfica amb rols? No cal taula càrrec sinó camps extras als rols (tipus etc) i només indicar foreign_key i tipus model
@@ -75,13 +110,38 @@ States:
 - Active substituint algú
 - Baixa lògica? not actiu en preparació
 
-Wizard:
-- Pas 1: escollir un usuari o crear-lo (enviaria al mòdul usuaris primer i després tornar aquí)
-- Pas 2: Fitxa de professor. Hi ha dades específiques
-  - OCO! Dades personals són associades a un usuari i per tant no posar aquí!
-- Pas 3: Substitucions
-- Pas 4: assignacions de grups/tutories <- Cúrriculum
+Wizard gestor (versió fa tota la feina):
+- Pas 1: escollir un usuari (amb cercador) o crear-lo (enviaria al mòdul usuaris primer i després tornar aquí)
+  - Pot ser un profe nou: des de la perspectiva de la planificació curricular no!! Pot no tenir dades personals però 
+  el professor ja ha d'existir! De fet és l'usuari el que ha d'existir! Només el user_id (usuaris amb estat, provisionals) es dona d'alta a la planificació i després s'activa al setembre
+- Pas 2: Estat: subtitut? actiu no actiu, etc
+  - NOTA: Si s'ha seleccionat usuari ja és profe es mostren dades i s'entra en mode edició. També opció dessasignar rol professor (no continuem els passos)
+- Pas 3: Fitxa de professor. Dades específiques:
+  - NO dades personals això és fa a user
+  - Dades professor: Cos, especialitat 
+  - Taula teachers, mirar fitxa de professorat
+- Pas 4: 
+ - Assignació de roles: grups/tutories/càrrecs <- Cúrriculum . Podria ser al pas 3 també
+ - Assignació codi de professor
+- Pass 5: Mostra info relacionada del professor:
+  - Horari: ja estarà fet (canvi perpectiva!! Ja no introduirem els horaris al setembre sinó al Juliol i no sabem tots els profes! per això usuaris amb id però sense més dades)
+  - Imprimir full benvinguda/PDF personalitzat (opcional aquest full sempre el tindra via web en vista web o PDF i rep notificacions)
+- Background: executar esdeveniments  
+ 
+Wizard profe nou (semipublic accesible per email):
+- Per accedir a este wizard cal saber una URL a mida (s'envia per correu)
+- Pas 1 (o 1/2): usuari temporal (no taula users) omple tota la seva informació (pot deixar camps en blanc)
+  - Omple dades personals i fitxa del professor (Potser 2 pasos)
+- Pas 2: Indica d'una llista la plaça que cobreix 
 
+Wizard gestor (amb ajuda professorat)
+- Pas 1: Alta places pendents assignar (desplegable apareix pas 2 wizard profe nou)
+- Pas 2: Assignar i envar a un correu personal la plaça pendent. El professor rep email i segueix passos Wizard profe nou
+- Pas 3: Validacions pendents: mostra quin ha ompler i qui no i permet validar
+- Sempre pot passar a la versió control total
+
+WEB PÚBLICA
+- Document explicant procés amb un link de contacte per enviar un email: permetria començar al Juliol o quan es desitgi
 
 Models
 
@@ -100,7 +160,7 @@ Teacher:
 TeacherSubstitution
 - Taula pivotant per relacionar professors entre si
 
-JobPosition
+JobPosition (NO CAL LLEGIR EXPLICACIÖ!!)
 - Assignació de càrrecs a usuaris. Normalment implica assignació de rols
 - Cal? no serveix ja roles? Potser cal posar algún camp extra opcionals a rols per indicar que també és un carrèc (type o similar)
 - Camps
