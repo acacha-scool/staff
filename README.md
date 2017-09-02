@@ -9,6 +9,14 @@
 
 Employees/workforce management for scools.
 
+## Dependencies
+
+This Scool module depends (or have strong relations with) on:
+
+- Foundation package
+- Curriculum package
+- Lesson package
+
 ## Notes
 
 Apartats:
@@ -158,7 +166,7 @@ Teacher:
   - PDF: sheet
   
 TeacherSubstitution
-- Taula pivotant per relacionar professors entre si
+- Taula pivotant per relacionar usuaris (professors) entre si
 
 JobPosition (NO CAL LLEGIR EXPLICACIÖ!!)
 - Assignació de càrrecs a usuaris. Normalment implica assignació de rols
@@ -178,12 +186,12 @@ Conserges:
 Secretaries:
 - Similar als conserges, però potser assumeixen més rols?
 
-Employee:
+Employee (NO CAL, an employee  is an user with a rol):
 - Una taula per tots? no crec no.. Tots són users això ok
   
 ### Subtitutes
 
-Opció 1. Impersonation
+Opció 1. Impersonation (DISCARDED BY SECURITY REASONS)
 - Es crea un usuari nou i s'assigna rol de professor
 - No es modifica cap registre de base de dades, és a dir el teacher_id del substitut no apareixerà a cap altre taula
   - Una possible excepció és al activity feed on estaria bé saber que ho ha fet el profe substituit però a través del substitut
