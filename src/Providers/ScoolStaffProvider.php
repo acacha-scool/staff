@@ -13,9 +13,6 @@ use Illuminate\Support\ServiceProvider;
 class ScoolStaffProvider extends ServiceProvider
 {
 
-    use DetectsApplicationNamespace;
-
-
     /**
      * Bootstrap the application services.
      *
@@ -37,10 +34,6 @@ class ScoolStaffProvider extends ServiceProvider
             define('SCOOLSTAFF_PATH', realpath(__DIR__.'/../../'));
         }
 
-//        if ($this->app->runningInConsole()) {
-//            $this->commands([\Acacha\AdminLTETemplateLaravel\Console\PublishAdminLTE::class]);
-//        }
-
         $this->app->bind('ScoolStaff', function () {
             return new \Acacha\Scool\Staff\ScoolStaff();
         });
@@ -54,7 +47,7 @@ class ScoolStaffProvider extends ServiceProvider
         if (!$this->app->routesAreCached()) {
             $router = app('router');
 
-            $router->group(['namespace' => $this->getAppNamespace().'Http\Controllers'], function () {
+            $router->group(['namespace' => 'Acacha\Scool\Staff\Http\Controllers'], function () {
                 require __DIR__.'/../Http/routes.php';
             });
         }
