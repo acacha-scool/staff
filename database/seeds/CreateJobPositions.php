@@ -14,6 +14,6 @@ class CreateJobPositions extends Seeder
      */
     public function run()
     {
-        seed_job_positions();
+            seed_job_positions();
     }
 }

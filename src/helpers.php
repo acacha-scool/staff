@@ -4,6 +4,10 @@ use Acacha\Scool\Staff\Models\JobPosition;
 use Spatie\Permission\PermissionRegistrar;
 
 if (! function_exists('initialize_staff_management_permissions')) {
+
+    /**
+     * Initialize staff management permissions and roles.
+     */
     function initialize_staff_management_permissions()
     {
         $manageStaff = role_first_or_create('manage-staff');
@@ -35,6 +39,9 @@ if (! function_exists('initialize_staff_management_permissions')) {
 }
 
 if (! function_exists('seed_job_positions')) {
+    /**
+     * Seed job positions.
+     */
     function seed_job_positions()
     {
         JobPosition::create(['name' => 'Tutora CAM']);
