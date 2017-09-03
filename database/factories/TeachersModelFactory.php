@@ -10,7 +10,9 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-use App\User;
+use Acacha\Scool\Staff\Models\JobPosition;
+use Scool\Curriculum\Models\Speciality;
+use Scool\Curriculum\Models\Area;
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(\Acacha\Scool\Staff\Models\Teacher::class, function (Faker\Generator $faker) {
@@ -18,7 +20,6 @@ $factory->define(\Acacha\Scool\Staff\Models\Teacher::class, function (Faker\Gene
         'code' => $id = $faker->unique()->numberBetween($min = 1, $max = 110),
         'state' => 'active',
         'speciality_id' => factory(Speciality::class)->create()->id,
-        'type' => factory(Area::class)->create()->id,
         'position_id' => factory(JobPosition::class)->create()->id
     ];
 });

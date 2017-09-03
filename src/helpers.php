@@ -1,6 +1,8 @@
 <?php
 
-use Acacha\Scool\Staff\Models\JobPosition;
+use Acacha\Scool\Staff\Models\Position;
+use Acacha\Scool\Staff\Models\Teacher;
+use Scool\Curriculum\Models\Speciality;
 use Spatie\Permission\PermissionRegistrar;
 
 if (! function_exists('initialize_staff_management_permissions')) {
@@ -38,16 +40,124 @@ if (! function_exists('initialize_staff_management_permissions')) {
     }
 }
 
-if (! function_exists('seed_job_positions')) {
+if (! function_exists('position_first_or_create')) {
     /**
-     * Seed job positions.
+     * Create position if not exists and return new o already existing position.
      */
-    function seed_job_positions()
+    function position_first_or_create($name)
     {
-        JobPosition::create(['name' => 'Tutora CAM']);
-        JobPosition::create(['name' => 'Resp. Atenció a la diversitat']);
-        JobPosition::create(['name' => 'Tutor CAS B/Resp. Biblioteca']);
-        JobPosition::create(['name' => 'Coord. Mobilitat / Erasmus+']);
+        try {
+            return Position::create(['name' => $name]);
+        } catch (Illuminate\Database\QueryException $e) {
+            return Position::where('name', $name);
+        }
+    }
+}
+
+if (! function_exists('seed_positions')) {
+    /**
+     * Seed positions.
+     */
+    function seed_positions()
+    {
+        position_first_or_create('Tutora CAM');
+        position_first_or_create('Resp. Atenció a la diversitat');
+        position_first_or_create('Tutor CAS B');
+        position_first_or_create('Resp. Biblioteca');
+        position_first_or_create('Coord. Mobilitat / Erasmus+');
+    }
+}
+
+if (! function_exists('teacher_first_or_create')) {
+    /**
+     * Create teacher if not exists and return new o already existing teacher.
+     */
+    function teacher_first_or_create($code, $state,  $specialityId, $positionIds = null)
+    {
+        try {
+            $teacher = Teacher::create([
+                'code' => $code,
+                'state' => $state,
+                'speciality_id' => $specialityId,
+            ]);
+
+            if ($positionIds) $teacher->positions()->sync($positionIds);
+
+            return $teacher;
+        } catch (Illuminate\Database\QueryException $e) {
+            return Teacher::where([
+                ['code', '=', $code]
+            ]);
+        }
+    }
+}
+
+if (! function_exists('obtainSpecialityIdByCode')) {
+    /**
+     * Obtain speciality by code.
+     */
+    function obtainSpecialityIdByCode($code)
+    {
+        return Speciality::where('code', $code)->first()->id;
+    }
+}
+
+if (! function_exists('obtainPositionIdByName')) {
+    /**
+     * Obtain speciality by code.
+     */
+    function obtainPositionIdByName($name)
+    {
+        return Position::where('name', $name)->first()->id;
+    }
+}
+
+if (! function_exists('seed_teachers')) {
+    /**
+     * Seed teachers.
+     */
+    function seed_teachers()
+    {
+        seed_specialities();
+        seed_positions();
+        teacher_first_or_create(
+            '02',
+            'active',
+            obtainSpecialityIdByCode('CAS'),
+            [
+                obtainPositionIdByName('Tutora CAM')
+            ]
+        );
+        teacher_first_or_create(
+            '03',
+            'active',
+            obtainSpecialityIdByCode('505'),
+            [
+                obtainPositionIdByName('Resp. Atenció a la diversitat')
+            ]
+        );
+        teacher_first_or_create(
+            '04',
+            'active',
+            obtainSpecialityIdByCode('AN')
+        );
+        teacher_first_or_create(
+            '05',
+            'active',
+            obtainSpecialityIdByCode('AN'),
+            [
+                obtainPositionIdByName('Tutor CAS B'),
+                obtainPositionIdByName('Resp. Biblioteca'),
+            ]
+        );
+        teacher_first_or_create(
+            '06',
+            'active',
+            obtainSpecialityIdByCode('AN'),
+            [
+                obtainPositionIdByName('Coord. Mobilitat / Erasmus+')
+            ]
+        );
 
     }
 }

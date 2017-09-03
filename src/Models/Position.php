@@ -5,11 +5,11 @@ namespace Acacha\Scool\Staff\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class JobPosition.
+ * Class Position.
  *
  * @package Acacha\Scool\Staff\Models
  */
-class JobPosition extends Model
+class Position extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -17,4 +17,12 @@ class JobPosition extends Model
      * @var array
      */
     protected $fillable = ['name'];
+
+    /**
+     * The teachers that have this position assigned.
+     */
+    public function teachers()
+    {
+        return $this->belongsToMany(Teacher::class);
+    }
 }

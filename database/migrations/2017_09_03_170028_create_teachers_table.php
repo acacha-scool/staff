@@ -18,11 +18,9 @@ class CreateTeachersTable extends Migration
     {
         Schema::create('teachers', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('code');
+            $table->string('code')->unique();
             $table->string('state');
-            $table->integer('speciality_id')->unsigned()->nullable();
-            $table->integer('type')->unsigned()->nullable();
-            $table->integer('position_id')->unsigned()->nullable();
+            $table->integer('speciality_id')->unsigned();
             $table->timestamps();
         });
     }

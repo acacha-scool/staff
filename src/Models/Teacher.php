@@ -20,7 +20,7 @@ class Teacher extends Model implements Stateful
      *
      * @var array
      */
-    protected $fillable = ['state', 'accomplished','incidences'];
+    protected $fillable = ['code', 'state', 'speciality_id'];
 
     /**
      * Progress States
@@ -60,6 +60,14 @@ class Teacher extends Model implements Stateful
     {
         if ( ( $this->accomplished != 0 ) || ( $this->incidences !=0 ) ) return true;
         return false;
+    }
+
+    /**
+     * The positions that user have.
+     */
+    public function positions()
+    {
+        return $this->belongsToMany(Position::class);
     }
 
 }
