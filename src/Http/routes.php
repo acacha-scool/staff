@@ -8,3 +8,9 @@ Route::group(['middleware' => 'web'], function () {
 
 });
 
+Route::group(['middleware' => 'api','prefix' => 'api/v1', 'middleware' => 'throttle'], function () {
+    Route::group(['middleware' => 'auth:api'], function() {
+        //USERS
+        Route::get('/teachers',                         'TeachersController@index');
+    });
+});

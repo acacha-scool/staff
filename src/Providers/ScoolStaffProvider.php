@@ -2,7 +2,7 @@
 
 namespace Acacha\Scool\Staff\Providers;
 
-use Illuminate\Console\DetectsApplicationNamespace;
+use Acacha\Scool\Staff\Facades\ScoolStaff;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -20,7 +20,16 @@ class ScoolStaffProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->defineRoutes();
+       $this->defineRoutes();
+
+        //Publish
+        $this->publishViews();
+
+        $this->publishSeeds();
+
+        //Loading
+        $this->loadMigrations();
+
     }
 
     /**
@@ -51,5 +60,30 @@ class ScoolStaffProvider extends ServiceProvider
                 require __DIR__.'/../Http/routes.php';
             });
         }
+    }
+
+    /**
+     * Publish package views to Laravel project.
+     */
+    private function publishViews()
+    {
+        $this->loadViewsFrom(SCOOLSTAFF_PATH.'/resources/views/', 'acacha_scool_staff');
+
+        $this->publishes(ScoolStaff::views(), 'acacha_scool_staff');
+    }
+
+    /**
+     * Load package migrations.
+     */
+    public function loadMigrations()
+    {
+        $this->loadMigrationsFrom(SCOOLSTAFF_PATH .'/database/migrations');
+    }
+
+    /**
+     * Publish seeds.
+     */
+    private function publishSeeds() {
+        $this->publishes(ScoolStaff::seeds(), 'acacha_scool_staff');
     }
 }
