@@ -144,8 +144,8 @@ Wizard profe nou (semipublic accesible per email):
 
 Wizard gestor (amb ajuda professorat)
 - Pas 1: Alta places pendents assignar (desplegable apareix pas 2 wizard profe nou)
-- Pas 2: Assignar i envar a un correu personal la plaça pendent. El professor rep email i segueix passos Wizard profe nou
-- Pas 3: Validacions pendents: mostra quin ha ompler i qui no i permet validar
+- Pas 2: Assignar i enviar a un correu personal la plaça pendent. El professor rep email i segueix passos Wizard profe nou
+- Pas 3: Validacions pendents: mostra quin ha omplert i qui no i permet validar
 - Sempre pot passar a la versió control total
 
 WEB PÚBLICA

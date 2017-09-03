@@ -1,7 +1,7 @@
 <?php
 
 Route::group(['middleware' => 'web'], function () {
-    Route::auth();
-
-    Route::get('/home', 'HomeController@index');
+    // Teachers
+    Route::get('/teachers/{id}/user',               'TeachersUserController@index');
 });
+

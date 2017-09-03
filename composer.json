@@ -44,10 +44,10 @@
         },
         "laravel": {
             "providers": [
-                "Acacha\\Scool\\Providers\\ScoolStaffProvider"
+                "Acacha\\Scool\\Staff\\Providers\\ScoolStaffProvider"
             ],
             "aliases": {
-                "ScoolStaff": "Acacha\\Scool\\ScoolStaff"
+                "ScoolStaff": "Acacha\\Scool\\Staff\\ScoolStaff"
             }
         }
     },
