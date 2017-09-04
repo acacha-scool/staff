@@ -4,7 +4,9 @@ namespace Acacha\Scool\Staff\Models;
 
 use Acacha\Stateful\Contracts\Stateful;
 use Acacha\Stateful\Traits\StatefulTrait;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
+use Scool\Curriculum\Models\Speciality;
 
 /**
  * Class Teacher.
@@ -29,8 +31,8 @@ class Teacher extends Model implements Stateful
      */
     protected $states = [
         'pending'  => ['initial' => true],
-        'stopped' ,
-        'finished' => ['final' => true]
+        'unactive' ,
+        'active' => ['final' => true]
     ];
 
     /**
@@ -39,26 +41,28 @@ class Teacher extends Model implements Stateful
      * @var array
      */
     protected $transitions = [
-        'stop' => [
-            'from' => ['pending'],
-            'to' => 'stopped'
+        'activate' => [
+            'from' => ['pending','unactive'],
+            'to' => 'active'
         ],
-        'resume' => [
-            'from' => ['stopped'],
+        'deactivate' => [
+            'from' => ['active'],
+            'to' => 'unactive'
+        ],
+        'unfinish' => [
+            'from' => ['active'],
             'to' => 'pending'
-        ],
-        'finish' => [
-            'from' => ['pending'],
-            'to' => 'finished'
         ]
     ];
 
     /**
+     * Validate activate.
+     * 
      * @return bool
      */
-    protected function validateFinish()
+    protected function validateActivate()
     {
-        if ( ( $this->accomplished != 0 ) || ( $this->incidences !=0 ) ) return true;
+        if ( ( $this->users_id != null )) return true;
         return false;
     }
 
@@ -68,6 +72,22 @@ class Teacher extends Model implements Stateful
     public function positions()
     {
         return $this->belongsToMany(Position::class);
+    }
+
+    /**
+     * Get the speciality record associated with the teacher.
+     */
+    public function speciality()
+    {
+        return $this->belongsTo(Speciality::class);
+    }
+
+    /**
+     * Get the user record associated with the teacher.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
 }
