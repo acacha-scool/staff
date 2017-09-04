@@ -2,6 +2,7 @@
 
 use Acacha\Scool\Staff\Models\Position;
 use Acacha\Scool\Staff\Models\Teacher;
+use App\User;
 use Scool\Curriculum\Models\Speciality;
 use Spatie\Permission\PermissionRegistrar;
 
@@ -159,6 +160,18 @@ if (! function_exists('seed_teachers')) {
             ]
         );
 
+    }
+}
+
+if (! function_exists('first_user_as_staff_manager')) {
+    /**
+     * Seed teachers.
+     */
+    function first_user_as_staff_manager()
+    {
+        initialize_staff_management_permissions();
+        $user = User::all()->first();
+        $user->assignRole('manage-staff');
     }
 }
 

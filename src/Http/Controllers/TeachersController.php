@@ -3,7 +3,6 @@
 namespace Acacha\Scool\Staff\Http\Controllers;
 
 use Acacha\Scool\Staff\Models\Teacher;
-use Acacha\Scool\Staff\Http\Resources\Teacher as TeacherResource;
 use Acacha\Scool\Staff\Http\Resources\Teachers as TeachersCollection;
 use Illuminate\Http\Request;
 
@@ -25,7 +24,6 @@ class TeachersController extends Controller
     {
         $this->authorize('list-teachers');
         if ( $this->paginationIsDisabled($request) ) {
-//            return Teacher::all();
             return new TeachersCollection(Teacher::all());
         }
         return Teacher::paginate();

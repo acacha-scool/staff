@@ -3,7 +3,10 @@
 Route::group(['middleware' => 'web'], function () {
     Route::group(['middleware' => 'auth'], function() {
         // Teachers
-        Route::get('/teachers/{id}/user',               'TeachersUserController@index');
+        Route::get('/management/teachers/wizard',               'TeachersWizardController@index');
+
+        //TODO
+        Route::get('/teachers/{id}/user',                       'TeachersUserController@index');
     });
 
 });

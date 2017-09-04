@@ -57,7 +57,7 @@ class Teacher extends Model implements Stateful
 
     /**
      * Validate activate.
-     * 
+     *
      * @return bool
      */
     protected function validateActivate()
