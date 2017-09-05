@@ -5,9 +5,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 /**
- * Class CreatePositionsTable
+ * Class CreateAdministrativeStatusesTable.
  */
-class CreatePositionsTable extends Migration
+class CreateAdministrativeStatusesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,8 +16,9 @@ class CreatePositionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('positions', function (Blueprint $table) {
+        Schema::create('administrative_statuses', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('code')->unique();
             $table->string('name')->unique();
             $table->timestamps();
         });
@@ -30,6 +31,6 @@ class CreatePositionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('positions');
+        Schema::dropIfExists('administrative_statuses');
     }
 }

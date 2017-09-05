@@ -18,10 +18,14 @@ class CreateTeachersTable extends Migration
     {
         Schema::create('teachers', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned()->nullable();
+            $table->integer('user_id')->unsigned()->unique();
+            $table->integer('vacancy_id')->unsigned()->unique();
+            $table->string('state')->default('pending');
             $table->string('code')->unique();
-            $table->string('state');
-            $table->integer('speciality_id')->unsigned();
+            $table->integer('administrative_status_id')->unsigned();
+            $table->string('administrative_start_year');
+            $table->string('opossitions_pass_year');
+            $table->date('start_date');
             $table->timestamps();
         });
     }

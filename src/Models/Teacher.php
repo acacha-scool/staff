@@ -5,7 +5,7 @@ namespace Acacha\Scool\Staff\Models;
 use Acacha\Stateful\Contracts\Stateful;
 use Acacha\Stateful\Traits\StatefulTrait;
 use App\User;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 use Scool\Curriculum\Models\Speciality;
 
 /**
@@ -13,7 +13,7 @@ use Scool\Curriculum\Models\Speciality;
  *
  * @package Acacha\Scool\Staff\Models
  */
-class Teacher extends Model implements Stateful
+class Teacher extends Pivot implements Stateful
 {
     use StatefulTrait;
 
@@ -62,7 +62,7 @@ class Teacher extends Model implements Stateful
      */
     protected function validateActivate()
     {
-        if ( ( $this->users_id != null )) return true;
+        if ( ( $this->users_id != null ) && ( $this->vacancy_id != null )) return true;
         return false;
     }
 
