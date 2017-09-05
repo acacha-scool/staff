@@ -68,6 +68,10 @@ if (! function_exists('seed_positions')) {
         position_first_or_create('Tutor CAS B');
         position_first_or_create('Resp. Biblioteca');
         position_first_or_create('Coord. Mobilitat / Erasmus+');
+        position_first_or_create('Cap dep. Lleng. estrangeres');
+        position_first_or_create('Tutor CAS A');
+        position_first_or_create('Coord CAS/CAM');
+        position_first_or_create('Coord. Informàtica');
     }
 }
 
@@ -75,16 +79,31 @@ if (! function_exists('teacher_first_or_create')) {
     /**
      * Create teacher if not exists and return new o already existing teacher.
      */
-    function teacher_first_or_create($code, $state,  $specialityId, $positionIds = null)
+    function teacher_first_or_create(
+        $code,
+        $user_id,
+        $vacancy_id,
+        $state,
+        $specialities,
+        $administrative_status,
+        $administrative_start_year,
+        $opossitions_pass_year,
+        $start_date
+    )
     {
         try {
             $teacher = Teacher::create([
                 'code' => $code,
+                'user_id' => $user_id,
+                'vacancy_id' => $vacancy_id,
                 'state' => $state,
-                'speciality_id' => $specialityId,
+                'administrative_status_id' => $administrative_status,
+                'administrative_start_year' => $administrative_start_year,
+                'opossitions_pass_year' => $opossitions_pass_year,
+                'start_date' => $start_date
             ]);
 
-            if ($positionIds) $teacher->positions()->sync($positionIds);
+            if ($specialities) $teacher->specialities()->sync($specialities);
 
             return $teacher;
         } catch (Illuminate\Database\QueryException $e) {
@@ -191,17 +210,99 @@ if (! function_exists('seed_vacancies')) {
     }
 }
 
+if (! function_exists('user_teacher_first_or_create')) {
+    /**
+     * Seed user teachers.
+     */
+    function user_teacher_first_or_create($name, $email, $password = null)
+    {
+        try {
+            $user = User::create([
+                'name' => $name,
+                'email' => $email,
+                'password' => $password ?: $password = bcrypt('secret'),
+                'remember_token' => str_random(10),
+            ]);
+
+            return $user;
+        } catch (Illuminate\Database\QueryException $e) {
+            return User::where([
+                ['code', '=', $name]
+            ]);
+        }
+    }
+}
+
+if (! function_exists('seed_user_teachers')) {
+    /**
+     * Seed user teachers.
+     */
+    function seed_user_teachers()
+    {
+        user_teacher_first_or_create('Dolors Sanjuan', 'dsanjuan@iesebre.com');
+        user_teacher_first_or_create('Marisa Grau', 'mgrau@iesebre.com');
+        user_teacher_first_or_create('Isabel Jordà', 'ijorda@iesebre.com');
+        user_teacher_first_or_create('Enric Querol Sanjuan', 'equerol@iesebre.com');
+        user_teacher_first_or_create('Lara Melich', 'lmelich@iesebre.com');
+        user_teacher_first_or_create('Carme Aznar', 'carmeaznar@iesebre.com');
+        user_teacher_first_or_create('Julià Curto', 'jcurto@iesebre.com');
+        user_teacher_first_or_create('Sergi Tur Badenas', 'stur@iesebre.com');
+    }
+}
+
+if (! function_exists('obtainUserIdByName')) {
+    /**
+     * Obtain user id by name.
+     */
+    function obtainUserIdByName($name)
+    {
+        return User::where('name', $name)->first()->id;
+    }
+}
+
+if (! function_exists('obtainUserIdByEmail')) {
+    /**
+     * Obtain user id by email.
+     */
+    function obtainUserIdByEmail($email)
+    {
+        return User::where('email', $email)->first()->id;
+    }
+}
+
+if (! function_exists('obtainVacancyIdByCode')) {
+    /**
+     * Obtain vacancy id by code.
+     */
+    function obtainVacancyIdByCode($code)
+    {
+        return Vacancy::where('code', $code)->first()->id;
+    }
+}
+
 if (! function_exists('seed_teachers')) {
     /**
      * Seed teachers.
      */
     function seed_teachers()
     {
+        seed_user_teachers();
+        //TODO seed_personal_info
+//        seed_personal_info_teachers();
         seed_specialities();
         seed_positions();
         seed_administrative_statuses();
         seed_vacancies();
 
+        //TODO
+        //Seed languages
+//        seed_languages();
+        //Seed degress
+//        seed_degrees();
+        //Seed profiles
+//        seed_profiles();
+        //Seed qualifications
+//        seed_qualifications();
         //TODO
         // Qualifications -> Assign specialities to teachers. Define the main speciality
         // Charges -> Assign positions to users.
@@ -211,42 +312,159 @@ if (! function_exists('seed_teachers')) {
         // Assign qualifications (specialities to teacher)
         // Assign administrative status to teacher
         // Assign formation to teacher
-        teacher_first_or_create(
+
+        $teacher = teacher_first_or_create(
             '02',
+            obtainUserIdByEmail('dsanjuan@iesebre.com'),
+            obtainVacancyIdByCode('LLE_1'),
             'active',
-            obtainSpecialityIdByCode('CAS'),
             [
-                obtainPositionIdByName('Tutora CAM')
-            ]
+                [ obtainSpecialityIdByCode('CAS')  => ['main' => true]]
+            ],
+            obtainAdministrativeStatusIdByName('Funcionari/a amb plaça definitiva'),
+            '2000',
+            "2000",
+            "2015-10-28 19:18:44"
         );
-        teacher_first_or_create(
+
+        //Assign positions to teacher if needed
+        $teacher->user->positions->sync([obtainPositionIdByName('Tutora CAM')]);
+
+        $teacher = teacher_first_or_create(
             '03',
+            obtainUserIdByEmail('mgrau@iesebre.com'),
+            obtainVacancyIdByCode('FOL_1'),
             'active',
-            obtainSpecialityIdByCode('505'),
             [
-                obtainPositionIdByName('Resp. Atenció a la diversitat')
-            ]
+                [ obtainSpecialityIdByCode('505')  => ['main' => true]]
+            ],
+            obtainAdministrativeStatusIdByName('Funcionari/a amb plaça definitiva'),
+            '2000',
+            "2000",
+            "2015-10-28 19:18:44"
         );
-        teacher_first_or_create(
+
+        //Assign positions to teacher if needed
+        $teacher->user->positions->sync([obtainPositionIdByName('Resp. Atenció a la diversitat')]);
+
+        $teacher = teacher_first_or_create(
             '04',
+            obtainUserIdByEmail('ijorda@iesebre.com'),
+            obtainVacancyIdByCode('LLE_2'),
             'active',
-            obtainSpecialityIdByCode('AN')
+            [
+                [ obtainSpecialityIdByCode('505')  => ['main' => true]]
+            ],
+            obtainAdministrativeStatusIdByName('Funcionari/a amb plaça definitiva'),
+            '2000',
+            "2000",
+            "2015-10-28 19:18:44"
         );
-        teacher_first_or_create(
+
+        $teacher = teacher_first_or_create(
             '05',
+            obtainUserIdByEmail('equerol@iesebre.com'),
+            obtainVacancyIdByCode('LLE_3'),
             'active',
-            obtainSpecialityIdByCode('AN'),
+            [
+                [ obtainSpecialityIdByCode('AN')  => ['main' => true]]
+            ],
+            obtainAdministrativeStatusIdByName('Funcionari/a amb plaça definitiva'),
+            '2000',
+            "2000",
+            "2015-10-28 19:18:44"
+        );
+
+        //Assign positions to teacher if needed
+        $teacher->user->positions->sync(
             [
                 obtainPositionIdByName('Tutor CAS B'),
                 obtainPositionIdByName('Resp. Biblioteca'),
             ]
         );
-        teacher_first_or_create(
+
+        $teacher = teacher_first_or_create(
             '06',
+            obtainUserIdByEmail('lmelich@iesebre.com'),
+            obtainVacancyIdByCode('LLE_4'),
             'active',
-            obtainSpecialityIdByCode('AN'),
+            [
+                [ obtainSpecialityIdByCode('AN')  => ['main' => true]]
+            ],
+            obtainAdministrativeStatusIdByName('Funcionari/a amb plaça definitiva'),
+            '2000',
+            "2000",
+            "2015-10-28 19:18:44"
+        );
+
+        //Assign positions to teacher if needed
+        $teacher->user->positions->sync(
             [
                 obtainPositionIdByName('Coord. Mobilitat / Erasmus+')
+            ]
+        );
+
+        $teacher = teacher_first_or_create(
+            '07',
+            obtainUserIdByEmail('carmenaznar@iesebre.com'),
+            obtainVacancyIdByCode('LLE_4'),
+            'active',
+            [
+                [ obtainSpecialityIdByCode('AN')  => ['main' => true]]
+            ],
+            obtainAdministrativeStatusIdByName('Funcionari/a amb plaça definitiva'),
+            '2000',
+            "2000",
+            "2015-10-28 19:18:44"
+        );
+
+        //Assign positions to teacher if needed
+        $teacher->user->positions->sync(
+            [
+                obtainPositionIdByName('Cap dep. Lleng. estrangeres')
+            ]
+        );
+
+        $teacher = teacher_first_or_create(
+            '08',
+            obtainUserIdByEmail('jcurto@iesebre.com'),
+            obtainVacancyIdByCode('LLE_3'),
+            'active',
+            [
+                [ obtainSpecialityIdByCode('MA')  => ['main' => true]]
+            ],
+            obtainAdministrativeStatusIdByName('Funcionari/a amb plaça definitiva'),
+            '2000',
+            "2000",
+            "2015-10-28 19:18:44"
+        );
+
+        //Assign positions to teacher if needed
+        $teacher->user->positions->sync(
+            [
+                obtainPositionIdByName('Tutor CAS A'),
+                obtainPositionIdByName('Coord CAS/CAM')
+            ]
+        );
+
+        $teacher = teacher_first_or_create(
+            '40',
+            obtainUserIdByEmail('stur@iesebre.com'),
+            obtainVacancyIdByCode('INF_3'),
+            'active',
+            [
+                [ obtainSpecialityIdByCode('507')  => ['main' => true]]
+            ],
+            obtainAdministrativeStatusIdByName('Funcionari/a amb plaça definitiva'),
+            '2009',
+            "2007",
+            "2009-09-01 00:00:00"
+        );
+
+        //Assign positions to teacher if needed
+        $teacher->user->positions->sync(
+            [
+                obtainPositionIdByName('Coord. Informàtica')
             ]
         );
 

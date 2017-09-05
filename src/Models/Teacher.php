@@ -67,19 +67,11 @@ class Teacher extends Pivot implements Stateful
     }
 
     /**
-     * The positions that user have.
+     * Get the specialities record associated with the teacher.
      */
-    public function positions()
+    public function specialities()
     {
-        return $this->belongsToMany(Position::class);
-    }
-
-    /**
-     * Get the speciality record associated with the teacher.
-     */
-    public function speciality()
-    {
-        return $this->belongsTo(Speciality::class);
+        return $this->belongsToMany(Speciality::class)->using(Qualification::class);
     }
 
     /**
