@@ -2,17 +2,17 @@
 
 namespace Acacha\Scool\Staff\Http\Resources;
 
-use Acacha\Scool\Staff\Http\Resources\Traits\TransformsTeachers;
+use Acacha\Scool\Staff\Http\Resources\Traits\TransformsVacancies;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 /**
- * Class Teachers.
+ * Class Vacancies.
  *
  * @package App\Http\Resources
  */
-class Teachers extends ResourceCollection
+class Vacancies extends ResourceCollection
 {
-    use TransformsTeachers;
+    use TransformsVacancies;
 
     /**
      * Transform the resource collection into an array.
@@ -23,8 +23,8 @@ class Teachers extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data' => $this->collection->map(function ($teacher, $key) {
-                return $this->transformTeacher($teacher);
+            'data' => $this->collection->map(function ($item, $key) {
+                return $this->transformVacancy($item);
             }),
             'meta' => [
                 'total' => count($this->collection)

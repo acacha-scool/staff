@@ -3,16 +3,16 @@
 namespace Acacha\Scool\Staff\Http\Controllers;
 
 use Acacha\Scool\Staff\Http\Controllers\Traits\CanDisablePagination;
-use Acacha\Scool\Staff\Models\Teacher;
-use Acacha\Scool\Staff\Http\Resources\Teachers as TeachersCollection;
+use Acacha\Scool\Staff\Models\Vacancy;
+use Acacha\Scool\Staff\Http\Resources\Vacancies as VacancyCollection;
 use Illuminate\Http\Request;
 
 /**
- * Class TeachersController.
+ * Class VacanciesController.
  *
  * @package Acacha\Scool\Staff\Http\Controllers
  */
-class TeachersController extends Controller
+class VacanciesController extends Controller
 {
     use CanDisablePagination;
 
@@ -24,11 +24,11 @@ class TeachersController extends Controller
      */
     public function index( Request $request)
     {
-        $this->authorize('list-teachers');
+        $this->authorize('list-vacancies');
         if ( $this->paginationIsDisabled($request) ) {
-            return new TeachersCollection(Teacher::all());
+            return new VacancyCollection(Vacancy::all());
         }
-        return new TeachersCollection(Teacher::paginate());
+        return Vacancy::paginate();
     }
 
 }

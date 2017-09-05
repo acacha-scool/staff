@@ -23,15 +23,29 @@ trait TransformsTeachers
         if ($teacher->user) {
             $user = new UserResource($teacher->user);
         }
+        $vacancy = [];
+        if ($teacher->vacancy) {
+//            $vacancy = new VacancyResource($teacher->user);
+        }
+        $specialities = [];
+        if ($teacher->specialities) {
+//            $specialities = new SpecialityResource($teacher->user);
+            //TODO
+            $specialities = [];
+        }
         return [
             'id' => $teacher->id,
             'code' => $teacher->code,
             'state' => $teacher->state,
-            'positions' => Position::collection($teacher->positions),
-            'speciality' => new SpecialityResource($teacher->speciality),
+            'specialities' => $specialities,
             'user' => $user,
-            'created_at' => $teacher->created_at,
-            'updated_at' => $teacher->updated_at,
+            'vacancy' => $vacancy,
+            'administrative_status_id' => $teacher->administrative_status_id,
+            'administrative_start_year' => $teacher->administrative_start_year,
+            'opossitions_pass_year' => $teacher->opossitions_pass_year,
+            'start_date' => $teacher->start_date,
+            'created_at' => $teacher->created_at->toDateTimeString(),
+            'updated_at' => $teacher->updated_at->toDateTimeString() ,
         ];
     }
 }

@@ -19,6 +19,21 @@ if (! function_exists('initialize_staff_management_permissions')) {
 
         //STAFF MANAGEMENT
 
+        //Vacancies
+        permission_first_or_create('list-vacancies');
+        permission_first_or_create('create-vacancies');
+        permission_first_or_create('view-vacancies');
+        permission_first_or_create('edit-vacancies');
+        permission_first_or_create('delete-vacancies');
+        permission_first_or_create('massive-delete-vacancies');
+
+        give_permission_to_role($manageStaff,'list-vacancies');
+        give_permission_to_role($manageStaff,'create-vacancies');
+        give_permission_to_role($manageStaff,'view-vacancies');
+        give_permission_to_role($manageStaff,'edit-vacancies');
+        give_permission_to_role($manageStaff,'delete-vacancies');
+        give_permission_to_role($manageStaff,'massive-delete-vacancies');
+
         //  Teachers
         permission_first_or_create('assign-user-to-teacher');
 
@@ -104,12 +119,11 @@ if (! function_exists('teacher_first_or_create')) {
             ]);
 
             if ($specialities) $teacher->specialities()->sync($specialities);
-
             return $teacher;
         } catch (Illuminate\Database\QueryException $e) {
             return Teacher::where([
                 ['code', '=', $code]
-            ]);
+            ])->first();
         }
     }
 }
@@ -171,6 +185,16 @@ if (! function_exists('seed_administrative_statuses')) {
     }
 }
 
+if (! function_exists('obtainAdministrativeStatusIdByName')) {
+    /**
+     * Obtain administrative status id by name.
+     */
+    function obtainAdministrativeStatusIdByName($name)
+    {
+        return AdministrativeStatus::where('name', $name)->first()->id;
+    }
+}
+
 if (! function_exists('vacancy_first_or_create')) {
     /**
      * Seed teacher vacancies.
@@ -181,7 +205,7 @@ if (! function_exists('vacancy_first_or_create')) {
             $vacancy = Vacancy::create([
                 'code' => $code,
                 'state' => $state,
-                'speciality_id' => $speciality->id,
+                'speciality_id' => $speciality,
             ]);
 
             return $vacancy;
@@ -244,7 +268,7 @@ if (! function_exists('seed_user_teachers')) {
         user_teacher_first_or_create('Isabel Jordà', 'ijorda@iesebre.com');
         user_teacher_first_or_create('Enric Querol Sanjuan', 'equerol@iesebre.com');
         user_teacher_first_or_create('Lara Melich', 'lmelich@iesebre.com');
-        user_teacher_first_or_create('Carme Aznar', 'carmeaznar@iesebre.com');
+        user_teacher_first_or_create('Carme Aznar', 'carmenaznar@iesebre.com');
         user_teacher_first_or_create('Julià Curto', 'jcurto@iesebre.com');
         user_teacher_first_or_create('Sergi Tur Badenas', 'stur@iesebre.com');
     }
@@ -319,7 +343,7 @@ if (! function_exists('seed_teachers')) {
             obtainVacancyIdByCode('LLE_1'),
             'active',
             [
-                [ obtainSpecialityIdByCode('CAS')  => ['main' => true]]
+                obtainSpecialityIdByCode('CAS')  => ['main' => true]
             ],
             obtainAdministrativeStatusIdByName('Funcionari/a amb plaça definitiva'),
             '2000',
@@ -328,7 +352,7 @@ if (! function_exists('seed_teachers')) {
         );
 
         //Assign positions to teacher if needed
-        $teacher->user->positions->sync([obtainPositionIdByName('Tutora CAM')]);
+        $teacher->user->positions()->sync([obtainPositionIdByName('Tutora CAM')]);
 
         $teacher = teacher_first_or_create(
             '03',
@@ -336,7 +360,7 @@ if (! function_exists('seed_teachers')) {
             obtainVacancyIdByCode('FOL_1'),
             'active',
             [
-                [ obtainSpecialityIdByCode('505')  => ['main' => true]]
+                obtainSpecialityIdByCode('505')  => ['main' => true]
             ],
             obtainAdministrativeStatusIdByName('Funcionari/a amb plaça definitiva'),
             '2000',
@@ -345,7 +369,8 @@ if (! function_exists('seed_teachers')) {
         );
 
         //Assign positions to teacher if needed
-        $teacher->user->positions->sync([obtainPositionIdByName('Resp. Atenció a la diversitat')]);
+
+        $teacher->user->positions()->sync([obtainPositionIdByName('Resp. Atenció a la diversitat')]);
 
         $teacher = teacher_first_or_create(
             '04',
@@ -353,7 +378,7 @@ if (! function_exists('seed_teachers')) {
             obtainVacancyIdByCode('LLE_2'),
             'active',
             [
-                [ obtainSpecialityIdByCode('505')  => ['main' => true]]
+                obtainSpecialityIdByCode('505')  => ['main' => true]
             ],
             obtainAdministrativeStatusIdByName('Funcionari/a amb plaça definitiva'),
             '2000',
@@ -367,7 +392,7 @@ if (! function_exists('seed_teachers')) {
             obtainVacancyIdByCode('LLE_3'),
             'active',
             [
-                [ obtainSpecialityIdByCode('AN')  => ['main' => true]]
+                obtainSpecialityIdByCode('AN')  => ['main' => true]
             ],
             obtainAdministrativeStatusIdByName('Funcionari/a amb plaça definitiva'),
             '2000',
@@ -376,7 +401,7 @@ if (! function_exists('seed_teachers')) {
         );
 
         //Assign positions to teacher if needed
-        $teacher->user->positions->sync(
+        $teacher->user->positions()->sync(
             [
                 obtainPositionIdByName('Tutor CAS B'),
                 obtainPositionIdByName('Resp. Biblioteca'),
@@ -389,7 +414,7 @@ if (! function_exists('seed_teachers')) {
             obtainVacancyIdByCode('LLE_4'),
             'active',
             [
-                [ obtainSpecialityIdByCode('AN')  => ['main' => true]]
+                obtainSpecialityIdByCode('AN')  => ['main' => true]
             ],
             obtainAdministrativeStatusIdByName('Funcionari/a amb plaça definitiva'),
             '2000',
@@ -398,7 +423,7 @@ if (! function_exists('seed_teachers')) {
         );
 
         //Assign positions to teacher if needed
-        $teacher->user->positions->sync(
+        $teacher->user->positions()->sync(
             [
                 obtainPositionIdByName('Coord. Mobilitat / Erasmus+')
             ]
@@ -410,7 +435,7 @@ if (! function_exists('seed_teachers')) {
             obtainVacancyIdByCode('LLE_4'),
             'active',
             [
-                [ obtainSpecialityIdByCode('AN')  => ['main' => true]]
+                obtainSpecialityIdByCode('AN')  => ['main' => true]
             ],
             obtainAdministrativeStatusIdByName('Funcionari/a amb plaça definitiva'),
             '2000',
@@ -419,7 +444,7 @@ if (! function_exists('seed_teachers')) {
         );
 
         //Assign positions to teacher if needed
-        $teacher->user->positions->sync(
+        $teacher->user->positions()->sync(
             [
                 obtainPositionIdByName('Cap dep. Lleng. estrangeres')
             ]
@@ -431,7 +456,7 @@ if (! function_exists('seed_teachers')) {
             obtainVacancyIdByCode('LLE_3'),
             'active',
             [
-                [ obtainSpecialityIdByCode('MA')  => ['main' => true]]
+                obtainSpecialityIdByCode('MA')  => ['main' => true]
             ],
             obtainAdministrativeStatusIdByName('Funcionari/a amb plaça definitiva'),
             '2000',
@@ -440,7 +465,7 @@ if (! function_exists('seed_teachers')) {
         );
 
         //Assign positions to teacher if needed
-        $teacher->user->positions->sync(
+        $teacher->user->positions()->sync(
             [
                 obtainPositionIdByName('Tutor CAS A'),
                 obtainPositionIdByName('Coord CAS/CAM')
@@ -453,7 +478,7 @@ if (! function_exists('seed_teachers')) {
             obtainVacancyIdByCode('INF_3'),
             'active',
             [
-                [ obtainSpecialityIdByCode('507')  => ['main' => true]]
+                obtainSpecialityIdByCode('507')  => ['main' => true]
             ],
             obtainAdministrativeStatusIdByName('Funcionari/a amb plaça definitiva'),
             '2009',
@@ -462,7 +487,7 @@ if (! function_exists('seed_teachers')) {
         );
 
         //Assign positions to teacher if needed
-        $teacher->user->positions->sync(
+        $teacher->user->positions()->sync(
             [
                 obtainPositionIdByName('Coord. Informàtica')
             ]

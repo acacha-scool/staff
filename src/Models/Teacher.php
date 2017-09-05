@@ -5,7 +5,7 @@ namespace Acacha\Scool\Staff\Models;
 use Acacha\Stateful\Contracts\Stateful;
 use Acacha\Stateful\Traits\StatefulTrait;
 use App\User;
-use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Database\Eloquent\Model;
 use Scool\Curriculum\Models\Speciality;
 
 /**
@@ -13,7 +13,7 @@ use Scool\Curriculum\Models\Speciality;
  *
  * @package Acacha\Scool\Staff\Models
  */
-class Teacher extends Pivot implements Stateful
+class Teacher extends Model implements Stateful
 {
     use StatefulTrait;
 
@@ -22,7 +22,16 @@ class Teacher extends Pivot implements Stateful
      *
      * @var array
      */
-    protected $fillable = ['code', 'state', 'speciality_id'];
+    protected $fillable = [
+        'code',
+        'state',
+        'speciality_id',
+        'user_id',
+        'administrative_status_id',
+        'administrative_start_year',
+        'opossitions_pass_year',
+        'start_date',
+    ];
 
     /**
      * Progress States
@@ -71,7 +80,7 @@ class Teacher extends Pivot implements Stateful
      */
     public function specialities()
     {
-        return $this->belongsToMany(Speciality::class)->using(Qualification::class);
+        return $this->belongsToMany(Speciality::class,'qualifications','teacher_id','speciality_id');
     }
 
     /**
