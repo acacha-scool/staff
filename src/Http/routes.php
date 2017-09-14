@@ -15,5 +15,6 @@ Route::group(['middleware' => 'api','prefix' => 'api/v1', 'middleware' => 'throt
     Route::group(['middleware' => 'auth:api'], function() {
         //USERS
         Route::get('/teachers',                         'TeachersController@index');
+        Route::get('/vacancies',                        'VacanciesController@index');
     });
 });

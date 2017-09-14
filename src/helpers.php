@@ -198,14 +198,19 @@ if (! function_exists('obtainAdministrativeStatusIdByName')) {
 if (! function_exists('vacancy_first_or_create')) {
     /**
      * Seed teacher vacancies.
+     *
+     * @param $code
+     * @param $speciality
+     * @param $state
+     * @return $this|\Illuminate\Database\Eloquent\Model
      */
-    function vacancy_first_or_create($code, $state, $speciality)
+    function vacancy_first_or_create($code, $speciality, $state)
     {
         try {
             $vacancy = Vacancy::create([
                 'code' => $code,
-                'state' => $state,
                 'speciality_id' => $speciality,
+                'state' => $state,
             ]);
 
             return $vacancy;
@@ -223,14 +228,121 @@ if (! function_exists('seed_vacancies')) {
      */
     function seed_vacancies()
     {
-        vacancy_first_or_create('LLE_1', 'pending', obtainSpecialityIdByCode('CAS'));
-        vacancy_first_or_create('FOL_1', 'pending', obtainSpecialityIdByCode('505'));
-        vacancy_first_or_create('LLE_2', 'pending', obtainSpecialityIdByCode('AN'));
-        vacancy_first_or_create('LLE_3', 'pending', obtainSpecialityIdByCode('AN'));
-        vacancy_first_or_create('LLE_4', 'pending', obtainSpecialityIdByCode('AN'));
-        vacancy_first_or_create('LLE_5', 'pending', obtainSpecialityIdByCode('AN'));
-        vacancy_first_or_create('LLE_2', 'pending', obtainSpecialityIdByCode('MA'));
-        vacancy_first_or_create('INF_3', 'pending', obtainSpecialityIdByCode('507'));
+        seed_specialities();
+        vacancy_first_or_create("501_1", obtainSpecialityIdByCode("501"), "active");
+        vacancy_first_or_create("501_2", obtainSpecialityIdByCode("501"), "active");
+        vacancy_first_or_create("501_3", obtainSpecialityIdByCode("501"), "active");
+        vacancy_first_or_create("501_4", obtainSpecialityIdByCode("501"), "active");
+        vacancy_first_or_create("501_5", obtainSpecialityIdByCode("501"), "active");
+        vacancy_first_or_create("504_1", obtainSpecialityIdByCode("504"), "active");
+        vacancy_first_or_create("505_1", obtainSpecialityIdByCode("505"), "active");
+        vacancy_first_or_create("505_2", obtainSpecialityIdByCode("505"), "active");
+        vacancy_first_or_create("505_3", obtainSpecialityIdByCode("505"), "active");
+        vacancy_first_or_create("505_4", obtainSpecialityIdByCode("505"), "active");
+        vacancy_first_or_create("505_5", obtainSpecialityIdByCode("505"), "active");
+        vacancy_first_or_create("505_6", obtainSpecialityIdByCode("505"), "active");
+        vacancy_first_or_create("507_1", obtainSpecialityIdByCode("507"), "active");
+        vacancy_first_or_create("507_2", obtainSpecialityIdByCode("507"), "active");
+        vacancy_first_or_create("507_3", obtainSpecialityIdByCode("507"), "active");
+        vacancy_first_or_create("507_4", obtainSpecialityIdByCode("507"), "active");
+        vacancy_first_or_create("507_5", obtainSpecialityIdByCode("507"), "active");
+        vacancy_first_or_create("507_6", obtainSpecialityIdByCode("507"), "active");
+        vacancy_first_or_create("508_1", obtainSpecialityIdByCode("508"), "active");
+        vacancy_first_or_create("508_2", obtainSpecialityIdByCode("508"), "active");
+        vacancy_first_or_create("508_3", obtainSpecialityIdByCode("508"), "active");
+        vacancy_first_or_create("508_4", obtainSpecialityIdByCode("508"), "active");
+        vacancy_first_or_create("508_5", obtainSpecialityIdByCode("508"), "active");
+        vacancy_first_or_create("508_6", obtainSpecialityIdByCode("508"), "active");
+        vacancy_first_or_create("510_1", obtainSpecialityIdByCode("510"), "active");
+        vacancy_first_or_create("510_2", obtainSpecialityIdByCode("510"), "active");
+        vacancy_first_or_create("510_3", obtainSpecialityIdByCode("510"), "active");
+        vacancy_first_or_create("510_4", obtainSpecialityIdByCode("510"), "active");
+        vacancy_first_or_create("512_1", obtainSpecialityIdByCode("512"), "active");
+        vacancy_first_or_create("512_2", obtainSpecialityIdByCode("512"), "active");
+        vacancy_first_or_create("512_3", obtainSpecialityIdByCode("512"), "active");
+        vacancy_first_or_create("513_1", obtainSpecialityIdByCode("513"), "active");
+        vacancy_first_or_create("517_1", obtainSpecialityIdByCode("517"), "active");
+        vacancy_first_or_create("517_2", obtainSpecialityIdByCode("517"), "active");
+        vacancy_first_or_create("517_3", obtainSpecialityIdByCode("517"), "active");
+        vacancy_first_or_create("517_4", obtainSpecialityIdByCode("517"), "active");
+        vacancy_first_or_create("517_5", obtainSpecialityIdByCode("517"), "active");
+        vacancy_first_or_create("518_1", obtainSpecialityIdByCode("518"), "active");
+        vacancy_first_or_create("518_2", obtainSpecialityIdByCode("518"), "active");
+        vacancy_first_or_create("518_3", obtainSpecialityIdByCode("518"), "active");
+        vacancy_first_or_create("518_4", obtainSpecialityIdByCode("518"), "active");
+        vacancy_first_or_create("518_5", obtainSpecialityIdByCode("518"), "active");
+        vacancy_first_or_create("522_1", obtainSpecialityIdByCode("522"), "active");
+        vacancy_first_or_create("522_2", obtainSpecialityIdByCode("522"), "active");
+        vacancy_first_or_create("524_1", obtainSpecialityIdByCode("524"), "active");
+        vacancy_first_or_create("524_2", obtainSpecialityIdByCode("524"), "active");
+        vacancy_first_or_create("525_1", obtainSpecialityIdByCode("525"), "active");
+        vacancy_first_or_create("525_2", obtainSpecialityIdByCode("525"), "active");
+        vacancy_first_or_create("525_3", obtainSpecialityIdByCode("525"), "active");
+        vacancy_first_or_create("525_4", obtainSpecialityIdByCode("525"), "active");
+        vacancy_first_or_create("602_1", obtainSpecialityIdByCode("602"), "active");
+        vacancy_first_or_create("602_2", obtainSpecialityIdByCode("602"), "active");
+        vacancy_first_or_create("605_1", obtainSpecialityIdByCode("605"), "active");
+        vacancy_first_or_create("606_1", obtainSpecialityIdByCode("606"), "active");
+        vacancy_first_or_create("606_2", obtainSpecialityIdByCode("606"), "active");
+        vacancy_first_or_create("606_3", obtainSpecialityIdByCode("606"), "active");
+        vacancy_first_or_create("611_1", obtainSpecialityIdByCode("611"), "active");
+        vacancy_first_or_create("611_2", obtainSpecialityIdByCode("611"), "active");
+        vacancy_first_or_create("611_3", obtainSpecialityIdByCode("611"), "active");
+        vacancy_first_or_create("611_4", obtainSpecialityIdByCode("611"), "active");
+        vacancy_first_or_create("611_5", obtainSpecialityIdByCode("611"), "active");
+        vacancy_first_or_create("611_6", obtainSpecialityIdByCode("611"), "active");
+        vacancy_first_or_create("611_7", obtainSpecialityIdByCode("611"), "active");
+        vacancy_first_or_create("611_8", obtainSpecialityIdByCode("611"), "active");
+        vacancy_first_or_create("612_1", obtainSpecialityIdByCode("612"), "active");
+        vacancy_first_or_create("619_1", obtainSpecialityIdByCode("619"), "active");
+        vacancy_first_or_create("619_2", obtainSpecialityIdByCode("619"), "active");
+        vacancy_first_or_create("619_3", obtainSpecialityIdByCode("619"), "active");
+        vacancy_first_or_create("619_4", obtainSpecialityIdByCode("619"), "active");
+        vacancy_first_or_create("619_5", obtainSpecialityIdByCode("619"), "active");
+        vacancy_first_or_create("620_1", obtainSpecialityIdByCode("620"), "active");
+        vacancy_first_or_create("620_2", obtainSpecialityIdByCode("620"), "active");
+        vacancy_first_or_create("620_3", obtainSpecialityIdByCode("620"), "active");
+        vacancy_first_or_create("620_4", obtainSpecialityIdByCode("620"), "active");
+        vacancy_first_or_create("620_5", obtainSpecialityIdByCode("620"), "active");
+        vacancy_first_or_create("620_6", obtainSpecialityIdByCode("620"), "active");
+        vacancy_first_or_create("620_7", obtainSpecialityIdByCode("620"), "active");
+        vacancy_first_or_create("620_8", obtainSpecialityIdByCode("620"), "active");
+        vacancy_first_or_create("620_9", obtainSpecialityIdByCode("620"), "active");
+        vacancy_first_or_create("620_10", obtainSpecialityIdByCode("620"), "active");
+        vacancy_first_or_create("620_11", obtainSpecialityIdByCode("620"), "active");
+        vacancy_first_or_create("620_12", obtainSpecialityIdByCode("620"), "active");
+        vacancy_first_or_create("620_13", obtainSpecialityIdByCode("620"), "active");
+        vacancy_first_or_create("621_1", obtainSpecialityIdByCode("621"), "active");
+        vacancy_first_or_create("621_2", obtainSpecialityIdByCode("621"), "active");
+        vacancy_first_or_create("621_3", obtainSpecialityIdByCode("621"), "active");
+        vacancy_first_or_create("622_1", obtainSpecialityIdByCode("622"), "active");
+        vacancy_first_or_create("622_2", obtainSpecialityIdByCode("622"), "active");
+        vacancy_first_or_create("622_3", obtainSpecialityIdByCode("622"), "active");
+        vacancy_first_or_create("622_4", obtainSpecialityIdByCode("622"), "active");
+        vacancy_first_or_create("622_5", obtainSpecialityIdByCode("622"), "active");
+        vacancy_first_or_create("623_1", obtainSpecialityIdByCode("623"), "active");
+        vacancy_first_or_create("623_2", obtainSpecialityIdByCode("623"), "active");
+        vacancy_first_or_create("623_3", obtainSpecialityIdByCode("623"), "active");
+        vacancy_first_or_create("625_1", obtainSpecialityIdByCode("625"), "active");
+        vacancy_first_or_create("625_2", obtainSpecialityIdByCode("625"), "active");
+        vacancy_first_or_create("625_3", obtainSpecialityIdByCode("625"), "active");
+        vacancy_first_or_create("625_4", obtainSpecialityIdByCode("625"), "active");
+        vacancy_first_or_create("625_5", obtainSpecialityIdByCode("625"), "active");
+        vacancy_first_or_create("625_6", obtainSpecialityIdByCode("625"), "active");
+        vacancy_first_or_create("625_7", obtainSpecialityIdByCode("625"), "active");
+        vacancy_first_or_create("625_8", obtainSpecialityIdByCode("625"), "active");
+        vacancy_first_or_create("627_1", obtainSpecialityIdByCode("627"), "active");
+        vacancy_first_or_create("627_2", obtainSpecialityIdByCode("627"), "active");
+        vacancy_first_or_create("627_3", obtainSpecialityIdByCode("627"), "active");
+        vacancy_first_or_create("627_4", obtainSpecialityIdByCode("627"), "active");
+        vacancy_first_or_create("627_5", obtainSpecialityIdByCode("627"), "active");
+        vacancy_first_or_create("AN_1", obtainSpecialityIdByCode("AN"), "active");
+        vacancy_first_or_create("AN_2", obtainSpecialityIdByCode("AN"), "active");
+        vacancy_first_or_create("AN_3", obtainSpecialityIdByCode("AN"), "active");
+        vacancy_first_or_create("AN_4", obtainSpecialityIdByCode("AN"), "active");
+        vacancy_first_or_create("CAS_1", obtainSpecialityIdByCode("CAS"), "active");
+        vacancy_first_or_create("MA_1", obtainSpecialityIdByCode("MA"), "active");
+
     }
 }
 
