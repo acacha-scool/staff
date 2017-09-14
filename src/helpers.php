@@ -78,15 +78,104 @@ if (! function_exists('seed_positions')) {
      */
     function seed_positions()
     {
-        position_first_or_create('Tutora CAM');
-        position_first_or_create('Resp. Atenció a la diversitat');
-        position_first_or_create('Tutor CAS B');
-        position_first_or_create('Resp. Biblioteca');
-        position_first_or_create('Coord. Mobilitat / Erasmus+');
-        position_first_or_create('Cap dep. Lleng. estrangeres');
-        position_first_or_create('Tutor CAS A');
-        position_first_or_create('Coord CAS/CAM');
-        position_first_or_create('Coord. Informàtica');
+        position_first_or_create("Administradora");
+        position_first_or_create("Cap Dep. Admin.");
+        position_first_or_create("Cap Dep. Comerç");
+        position_first_or_create("Cap Dep. Edif. i Obra");
+        position_first_or_create("Cap Dep. Inform");
+        position_first_or_create("Cap Dep. Sanit.");
+        position_first_or_create("Cap Seminari Serv. Com.");
+        position_first_or_create("Cap d'estudis FP");
+        position_first_or_create("Cap d'estudis adjunt");
+        position_first_or_create("Cap de seminari Inform.");
+        position_first_or_create("Cap dep. Arts gràf.");
+        position_first_or_create("Cap dep. FOL");
+        position_first_or_create("Cap dep. Lleng. estrangeres");
+        position_first_or_create("Cap seminari");
+        position_first_or_create("Cap. Dep. Electric.");
+        position_first_or_create("Cap. Dep. Fabric. Mec.");
+        position_first_or_create("Mant.");
+        position_first_or_create("Cap. Dep. Serv. Com.");
+        position_first_or_create("Cap. Sem. Dep. Electric.");
+        position_first_or_create("Cap. seminari  Fabric. Mec.");
+        position_first_or_create("Coord. FP");
+        position_first_or_create("Coord. Inform.");
+        position_first_or_create("Coord. Mobilitat");
+        position_first_or_create("Erasmus+");
+        position_first_or_create("Coord. Qualitat");
+        position_first_or_create("Coord. pedagògica");
+        position_first_or_create("Director");
+        position_first_or_create("Resp. Atenció a la diversitat");
+        position_first_or_create("Resp. Escoles Verdes");
+        position_first_or_create("Resp. Validació experiència prof.");
+        position_first_or_create("Secretària");
+        position_first_or_create("Suport Mobilitat internacional");
+        position_first_or_create("Tutor 1 INS B");
+        position_first_or_create("Tutor 1ACO");
+        position_first_or_create("Tutor 1EIN");
+        position_first_or_create("Tutor 1IEA");
+        position_first_or_create("Tutor 1LCB");
+        position_first_or_create("Tutor 1MEC");
+        position_first_or_create("Tutor 1MEM");
+        position_first_or_create("Tutor 1PPFM");
+        position_first_or_create("Tutor 1SMX A");
+        position_first_or_create("C");
+        position_first_or_create("Tutor 1SMX B");
+        position_first_or_create("Tutor 2 INS A");
+        position_first_or_create("Tutor 2 PRID");
+        position_first_or_create("Tutor 2ADI");
+        position_first_or_create("Tutor 2AF");
+        position_first_or_create("Tutor 2APD");
+        position_first_or_create("Tutor 2ASIX");
+        position_first_or_create("Tutor 2DAM");
+        position_first_or_create("Tutor 2DIE");
+        position_first_or_create("Coord. Prev. Riscos");
+        position_first_or_create("Tutor 2EE");
+        position_first_or_create("CC mant. general");
+        position_first_or_create("Tutor 2EIN");
+        position_first_or_create("Tutor 2FAR");
+        position_first_or_create("Tutor 2IEA");
+        position_first_or_create("Tutor 2MEC");
+        position_first_or_create("Tutor 2MEM");
+        position_first_or_create("Tutor 2PPFM.");
+        position_first_or_create("Tutor 2PRO");
+        position_first_or_create("1EE");
+        position_first_or_create("Tutor 2SIC");
+        position_first_or_create("Tutor 2SMX A i B");
+        position_first_or_create("Tutor CAS A");
+        position_first_or_create("Coord CAS");
+        position_first_or_create("CAM");
+        position_first_or_create("Tutor CAS B");
+        position_first_or_create("Resp. Biblioteca");
+        position_first_or_create("Tutor IT");
+        position_first_or_create("CC  Audiovisuals");
+        position_first_or_create("Tutora  1MAP");
+        position_first_or_create("Tutora 1 DEP");
+        position_first_or_create("Tutora 1 PRID");
+        position_first_or_create("Tutora 1ADI");
+        position_first_or_create("Tutora 1AF");
+        position_first_or_create("Tutora 1APD");
+        position_first_or_create("Resp. orientació");
+        position_first_or_create("Tutora 1ARI");
+        position_first_or_create("CC Activ. extraes.");
+        position_first_or_create("Tutora 1ASIX-DAM");
+        position_first_or_create("Tutora 1DIE");
+        position_first_or_create("Tutora 1ES");
+        position_first_or_create("Tutora 1FAR");
+        position_first_or_create("Tutora 1GAD");
+        position_first_or_create("Tutora 1INS A");
+        position_first_or_create("Tutora 2 INS B");
+        position_first_or_create("Tutora 2ACO-Resp. Emprenedoria");
+        position_first_or_create("Tutora 2ARI");
+        position_first_or_create("CC pag. Web- Moodle");
+        position_first_or_create("Tutora 2ES");
+        position_first_or_create("Tutora 2GAD");
+        position_first_or_create("Tutora 2LCB");
+        position_first_or_create("Tutora 2MAP");
+        position_first_or_create("Tutora CAI A");
+        position_first_or_create("Tutora CAI C");
+        position_first_or_create("Tutora CAM");
+        position_first_or_create("Tutora de CAI B");
     }
 }
 
@@ -617,6 +706,17 @@ if (! function_exists('first_user_as_staff_manager')) {
         initialize_staff_management_permissions();
         $user = User::all()->first();
         $user->assignRole('manage-staff');
+    }
+}
+
+if (! function_exists('seed_staff')) {
+    /**
+     * Seed staff.
+     */
+    function seed_staff()
+    {
+        seed_vacancies();
+        seed_administrative_statuses();
     }
 }
 
