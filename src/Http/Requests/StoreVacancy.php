@@ -2,6 +2,7 @@
 
 namespace Acacha\Scool\Staff\Http\Requests;
 
+use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
@@ -18,8 +19,7 @@ class StoreVacancy extends FormRequest
      */
     public function authorize()
     {
-        return true;
-//        return $this->authorize('create-vacancies');
+        return Auth::user()->hasPermissionTo('create-vacancies');
     }
 
     /**

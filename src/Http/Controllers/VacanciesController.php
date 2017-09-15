@@ -4,6 +4,7 @@ namespace Acacha\Scool\Staff\Http\Controllers;
 
 use Acacha\Scool\Staff\Http\Controllers\Traits\CanDisablePagination;
 use Acacha\Scool\Staff\Http\Requests\StoreVacancy;
+use Acacha\Scool\Staff\Http\Requests\UpdateVacancy;
 use Acacha\Scool\Staff\Models\Vacancy;
 use Acacha\Scool\Staff\Http\Resources\Vacancies as VacancyCollection;
 use Illuminate\Http\Request;
@@ -53,11 +54,11 @@ class VacanciesController extends Controller
     /**
      * Update an existing resource in storage.
      *
-     * @param StoreVacancy $request
+     * @param UpdateVacancy $request
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(StoreVacancy $request, $id)
+    public function update(UpdateVacancy $request, $id)
     {
         $vacancy = Vacancy::findOrFail($id);
 
@@ -77,6 +78,7 @@ class VacanciesController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('delete-vacancies');
         $vacancy = Vacancy::findOrFail($id);
         $vacancy->delete();
         return $this->respondDeleted('Vacancy');
