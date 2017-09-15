@@ -293,13 +293,13 @@ if (! function_exists('vacancy_first_or_create')) {
      * @param $state
      * @return $this|\Illuminate\Database\Eloquent\Model
      */
-    function vacancy_first_or_create($code, $speciality, $state)
+    function vacancy_first_or_create($code, $state, $speciality )
     {
         try {
             $vacancy = Vacancy::create([
                 'code' => $code,
-                'speciality_id' => $speciality,
                 'state' => $state,
+                'speciality_id' => $speciality
             ]);
 
             return $vacancy;
@@ -310,6 +310,16 @@ if (! function_exists('vacancy_first_or_create')) {
         }
     }
 }
+if (! function_exists('count_vacancies')) {
+    /**
+     * Count vacancies.
+     */
+    function count_vacancies()
+    {
+        return Vacancy::all()->count();
+    }
+}
+
 
 if (! function_exists('seed_vacancies')) {
     /**
@@ -317,6 +327,7 @@ if (! function_exists('seed_vacancies')) {
      */
     function seed_vacancies()
     {
+        seed_specialities();
         vacancy_first_or_create('LLE_1', 'pending', obtainSpecialityIdByCode('CAS'));
         vacancy_first_or_create('FOL_1', 'pending', obtainSpecialityIdByCode('505'));
         vacancy_first_or_create('LLE_2', 'pending', obtainSpecialityIdByCode('AN'));

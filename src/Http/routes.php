@@ -13,8 +13,14 @@ Route::group(['middleware' => 'web'], function () {
 
 Route::group(['middleware' => 'api','prefix' => 'api/v1', 'middleware' => 'throttle'], function () {
     Route::group(['middleware' => 'auth:api'], function() {
-        //USERS
+        //Teachers
         Route::get('/teachers',                         'TeachersController@index');
+
+        //Vacancies
         Route::get('/vacancies',                        'VacanciesController@index');
+        Route::post('/vacancies',                       'VacanciesController@store');
+        Route::patch('/vacancies/{id}',                 'VacanciesController@update');
+        Route::put('/vacancies/{id}',                   'VacanciesController@update');
+        Route::delete('/vacancies/{id}',                'VacanciesController@destroy');
     });
 });

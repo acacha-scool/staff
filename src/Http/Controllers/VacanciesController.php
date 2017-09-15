@@ -3,6 +3,7 @@
 namespace Acacha\Scool\Staff\Http\Controllers;
 
 use Acacha\Scool\Staff\Http\Controllers\Traits\CanDisablePagination;
+use Acacha\Scool\Staff\Http\Requests\StoreVacancy;
 use Acacha\Scool\Staff\Models\Vacancy;
 use Acacha\Scool\Staff\Http\Resources\Vacancies as VacancyCollection;
 use Illuminate\Http\Request;
@@ -30,5 +31,95 @@ class VacanciesController extends Controller
         }
         return Vacancy::paginate();
     }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param StoreVacancy $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function store(StoreVacancy $request)
+    {
+        Vacancy::create(
+            request([
+                'code',
+                'state',
+                'speciality_id',
+            ]));
+        return $this->respondCreated('Vacancy');
+    }
+
+
+    /**
+     * Update an existing resource in storage.
+     *
+     * @param StoreVacancy $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update(StoreVacancy $request, $id)
+    {
+        $vacancy = Vacancy::findOrFail($id);
+
+        $vacancy->update(request([
+            'code',
+            'state',
+            'speciality_id',
+        ]));
+        return $this->respondUpdated('Vacancy');
+    }
+
+    /**
+     * Delete a vacancy.
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function destroy($id)
+    {
+        $vacancy = Vacancy::findOrFail($id);
+        $vacancy->delete();
+        return $this->respondDeleted('Vacancy');
+    }
+
+    /**
+     * Response with a json message that resource has been correctly created.
+     *
+     * @param $resource
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function respondCreated($resource)
+    {
+        return response()->json([
+            'message' =>  $resource . ' successfully created.'
+        ], 201);
+    }
+
+    /**
+     * Response with a json message that resource has been correctly updated.
+     *
+     * @param $resource
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function respondUpdated($resource)
+    {
+        return response()->json([
+            'message' =>  $resource . ' successfully updated.'
+        ], 200);
+    }
+
+    /**
+     * Response with a json message that resource has been correctly deleted.
+     *
+     * @param $resource
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function respondDeleted($resource)
+    {
+        return response()->json([
+            'message' =>  $resource . ' successfully deleted.'
+        ], 200);
+    }
+
 
 }
