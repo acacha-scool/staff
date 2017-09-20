@@ -18,9 +18,17 @@ class CreateVacanciesTable extends Migration
     {
         Schema::create('vacancies', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('code')->unique();
-            $table->string('state')->default('pending');
             $table->integer('speciality_id')->unsigned();
+            $table->integer('department_id')->unsigned();
+            $table->tinyInteger('order')->unsigned();
+            $table->string('owner')->unique();
+            $table->string('state')->default('pending');
+
+            $table->unique(['department_id', 'order']);
+            $table->foreign('speciality_id')->references('id')->on('specialities')->onDelete('cascade');
+            $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
+            $table->foreign('owner')->references('id')->on('teachers')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

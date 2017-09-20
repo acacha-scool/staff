@@ -22,7 +22,13 @@ class Vacancy extends Model implements Stateful
      *
      * @var array
      */
-    protected $fillable = ['code', 'state', 'speciality_id'];
+    protected $fillable = [
+        'speciality_id',
+        'department_id',
+        'order',
+        'owner',
+        'state'
+    ];
 
     /**
      * Progress States
@@ -57,7 +63,8 @@ class Vacancy extends Model implements Stateful
      */
     protected function validateAssign()
     {
-        if (! $this->users->isEmpty()) return true;
+        if ($this->teachers == null) return false;
+        if (! $this->teachers->isEmpty()) return true;
         return false;
     }
 
@@ -70,11 +77,10 @@ class Vacancy extends Model implements Stateful
     }
 
     /**
-     * Get the users record associated with the teacher vacancy.
-     * Multiple teacher could have the same vacancy (substitutes).
+     * Get the teachers associated with the vacancy.
      */
-    public function users()
+    public function teachers()
     {
-        return $this->belongsTo(User::class)->using(Teacher::class);
-    }
+        return $this->hasMany(Teacher::class);
+   }
 }

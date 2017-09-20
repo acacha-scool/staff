@@ -71,7 +71,7 @@ class Teacher extends Model implements Stateful
      */
     protected function validateActivate()
     {
-        if ( ( $this->users_id != null ) && ( $this->vacancy_id != null )) return true;
+        if ( ( $this->user_id != null ) && ( $this->vacancy_id != null )) return true;
         return false;
     }
 
@@ -80,7 +80,10 @@ class Teacher extends Model implements Stateful
      */
     public function specialities()
     {
-        return $this->belongsToMany(Speciality::class,'qualifications','teacher_id','speciality_id');
+        return $this->belongsToMany(
+            Speciality::class,'qualifications',
+            'teacher_id',
+            'speciality_id')->withTimestamps();
     }
 
     /**
@@ -89,6 +92,14 @@ class Teacher extends Model implements Stateful
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the vacancy record associated with the teacher.
+     */
+    public function vacancy()
+    {
+        return $this->belongsTo(Vacancy::class);
     }
 
 }
