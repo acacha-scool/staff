@@ -27,7 +27,7 @@ class CreateProfilesTable extends Migration
             $table->integer('profile_id')->unsigned();
             $table->integer('teacher_id')->unsigned();
             $table->foreign('profile_id')->references('id')->on('profiles')->onDelete('cascade');
-            $table->foreign('teacher_id')->references('id')->on('teacher')->onDelete('cascade');
+            $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('cascade');
 
             $table->timestamps();
         });

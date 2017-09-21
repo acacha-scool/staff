@@ -21,7 +21,7 @@ class CreateVacanciesTable extends Migration
             $table->integer('speciality_id')->unsigned();
             $table->integer('department_id')->unsigned();
             $table->tinyInteger('order')->unsigned();
-            $table->string('owner')->unique();
+            $table->integer('owner')->unsigned()->unique();
             $table->string('state')->default('pending');
 
             $table->unique(['department_id', 'order']);
