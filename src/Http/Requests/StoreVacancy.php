@@ -30,9 +30,11 @@ class StoreVacancy extends FormRequest
     public function rules()
     {
         return [
-            'code' => 'required',
-            'state' => 'required_with:pending,active',
-            'speciality_id' => 'required|integer',
+            'speciality_id' => 'required|integer|exists:specialities,id',
+            'department_id' => 'required|integer|exists:departments,id',
+            'order' => 'required|integer',
+            'owner' => 'required|integer|exists:teachers,id',
+            'state' => 'required_with:pending,assigned',
         ];
     }
 }

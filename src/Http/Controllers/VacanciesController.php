@@ -43,9 +43,11 @@ class VacanciesController extends Controller
     {
         Vacancy::create(
             request([
-                'code',
-                'state',
                 'speciality_id',
+                'department_id',
+                'order',
+                'owner',
+                'state',
             ]));
         return $this->respondCreated('Vacancy');
     }
