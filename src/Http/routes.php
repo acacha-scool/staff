@@ -9,6 +9,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('/teachers/{id}/user',                       'TeachersUserController@index');
     });
 
+    Route::get('/teacher',                                      'TeachersWizardController@index');
 });
 
 Route::group(['middleware' => 'api','prefix' => 'api/v1', 'middleware' => 'throttle'], function () {

@@ -22,16 +22,16 @@ class CreateDegreesTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('degree_user', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('degree_id')->unsigned();
-            $table->integer('user_id')->unsigned();
-            $table->boolean('main');
-            $table->foreign('degree_id')->references('id')->on('degrees')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-
-            $table->timestamps();
-        });
+//        Schema::create('degree_user', function (Blueprint $table) {
+//            $table->increments('id');
+//            $table->integer('degree_id')->unsigned();
+//            $table->integer('user_id')->unsigned();
+//            $table->boolean('main');
+//            $table->foreign('degree_id')->references('id')->on('degrees')->onDelete('cascade');
+//            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+//
+//            $table->timestamps();
+//        });
     }
 
     /**

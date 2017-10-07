@@ -19,11 +19,21 @@ class TeachersWizardController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index2()
     {
         $this->authorize('assign-user-to-teacher');
 
         return view('acacha_scool_staff::assign-user-to-teacher');
+    }
+
+    /**
+     * Show wizard.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index()
+    {
+        return view('acacha_scool_staff::teacher_wizard');
     }
 
 }
